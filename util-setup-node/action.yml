@@ -11,6 +11,8 @@ runs:
   steps:
     - name: 'Cache Dependencies'
       uses: 'actions/cache@v3'
+      env:
+        VERDACCIO_TOKEN: ${{ secrets.VERDACCIO_TOKEN }}
       id: cache-node-modules
       with:
         path: 'node_modules'
