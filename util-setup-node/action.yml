@@ -22,4 +22,4 @@ runs:
       shell: bash
       run: npm run test:coverage
       env:
-        VERDACCIO_TOKEN: ${{ secrets.VERDACCIO_TOKEN }}
+        VERDACCIO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
