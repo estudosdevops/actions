@@ -9,17 +9,17 @@ runs:
   using: "composite"
 
   steps:
-    - name: 'Cache Dependencies'
-      uses: 'actions/cache@v3'
+    - uses: actions/checkout@main
+    - uses: actions/setup-node@main
+      with:
+        cache: 'npm'
+    - run: npm ci
+      shell: bash
       env:
         VERDACCIO_TOKEN: ${{ secrets.VERDACCIO_TOKEN }}
-      id: cache-node-modules
-      with:
-        path: 'node_modules'
-        key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
 
-    - name: Install Dependencies
-      if: steps.cache-node-modules.outputs.cache-hit != 'true'
-      run: npm ci
-      # the shell to be used is required in composite custom actions
+    - name: Run Tests
       shell: bash
+      run: npm run test:coverage
+      env:
+        VERDACCIO_TOKEN: ${{ secrets.VERDACCIO_TOKEN }}
