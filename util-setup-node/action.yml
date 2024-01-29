@@ -2,8 +2,9 @@
 name: "Setup node for an action"
 description: "Setup node package, cache and path for an action"
 inputs:
-  actionPath:
-    description: "calling action path's to setup"
+  verdaccio_token:
+    description: "Get verdaccio token"
+    required: true
 
 runs:
   using: "composite"
@@ -16,10 +17,10 @@ runs:
     - run: npm ci
       shell: bash
       env:
-        VERDACCIO_TOKEN: ${{ secrets.VERDACCIO_TOKEN }}
+        VERDACCIO_TOKEN: ${{ inputs.verdaccio_token }}
 
     - name: Run Tests
       shell: bash
       run: npm run test:coverage
       env:
-        VERDACCIO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        VERDACCIO_TOKEN: ${{ inputs.verdaccio_token }}
